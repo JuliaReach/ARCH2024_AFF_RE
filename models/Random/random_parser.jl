@@ -96,9 +96,17 @@ function parse_set(dict)
 end
 
 function parse_box(dict)
-    l = Float64.(dict["lowerbound"])
-    u = Float64.(dict["upperbound"])
+    l = _parse_box_bound(dict["lowerbound"])
+    u = _parse_box_bound(dict["upperbound"])
     return Hyperrectangle(low=l, high=u)
+end
+
+function _parse_box_bound(bound::Number)
+    return [Float64(bound)]
+end
+
+function _parse_box_bound(bounds::AbstractVector)
+    return Float64.(bounds)
 end
 
 function parse_unsafe_states(dict)

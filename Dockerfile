@@ -12,4 +12,6 @@ WORKDIR /juliareach_aff
 
 # copy current directory into container
 COPY . /juliareach_aff
+# also copy random benchmarks, if they exist
+COPY secret-data* /juliareach_aff/models/Random/rand/
 RUN chmod -R 777 /juliareach_aff

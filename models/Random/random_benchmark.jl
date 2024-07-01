@@ -1,9 +1,9 @@
 using BenchmarkTools
 using BenchmarkTools: minimum, median
 
-directory = joinpath(@__DIR__, "..", "..", "rand")
+directory = joinpath(@__DIR__, "rand")
 if !isdir(directory)
-    throw(ArgumentError("no `rand` folder was found in the base directory"))
+    throw(ArgumentError("no `rand` folder was found"))
 end
 
 include("random_parser.jl")
@@ -30,8 +30,7 @@ for (i, file) in enumerate(readdir(directory))
 
         res = solve_random(ivp, spec, T; silent=silent)
         validation[case] = Int(res)
-        SUITE[model][case] = @benchmarkable solve_random($ivp, $predicate_safe,
-            $predicate_unsafe, $T)
+        SUITE[model][case] = @benchmarkable solve_random($ivp, $spec, $T)
     else
         @warn "ignoring $file in $directory"
     end
